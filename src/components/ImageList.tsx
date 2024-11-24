@@ -51,6 +51,7 @@ export function ImageList({ images, onClear, onCancel, isConverting }: ImageList
   };
 
   const convertedCount = images.filter(img => img.status === 'done').length;
+  const allConverted = convertedCount === images.length;
 
   return (
     <div className="mt-8">
@@ -68,10 +69,10 @@ export function ImageList({ images, onClear, onCancel, isConverting }: ImageList
               Annuler
             </button>
           )}
-          {convertedCount > 0 && (
+          {!isConverting && allConverted && convertedCount > 0 && (
             <button
               onClick={handleDownloadAll}
-              className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 dark:text-blue-400 dark:bg-blue-900/50 dark:hover:bg-blue-900/70"
+              className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105"
             >
               <Package className="w-4 h-4 mr-1.5" />
               Tout télécharger
@@ -103,13 +104,13 @@ export function ImageList({ images, onClear, onCancel, isConverting }: ImageList
                   alt={image.originalName}
                   className="w-full h-full object-cover"
                 />
-                {image.status === 'done' && (
+                {!isConverting && image.status === 'done' && (
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <button
                       onClick={() => handleDownload(image)}
-                      className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-110"
                     >
-                      <Download className="w-5 h-5 text-gray-900 dark:text-gray-100" />
+                      <Download className="w-5 h-5" />
                     </button>
                   </div>
                 )}
